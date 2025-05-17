@@ -9,14 +9,25 @@ import 'package:instagram_clone/features/feed/presentation/bloc/feed_bloc.dart';
 import 'package:instagram_clone/di.dart';
 import 'package:instagram_clone/features/feed/presentation/bloc/feed_event.dart';
 import 'package:instagram_clone/core/widgets/core_widgets.dart';
+import 'package:instagram_clone/features/story/presentation/bloc/story_bloc.dart';
+import 'package:instagram_clone/features/story/presentation/bloc/story_event.dart';
+import 'package:instagram_clone/features/story/presentation/widgets/stories_list.dart';
+import 'package:instagram_clone/features/story/presentation/pages/story_viewer_screen.dart';
 
 class FeedScreen extends StatelessWidget {
   const FeedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<FeedBloc>()..add(LoadFeedEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<FeedBloc>()..add(LoadFeedEvent()),
+        ),
+        BlocProvider(
+          create: (context) => StoryBloc()..add(const LoadStoriesEvent()),
+        ),
+      ],
       child: BlocBuilder<FeedBloc, BaseApiState>(
         builder: (context, state) {
           final apiStatus = state.toApiStatus(); // Convert state to MyApiStatus
@@ -45,6 +56,18 @@ class FeedScreen extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     slivers: [
                       MyAppBar(title: 'For you',),
+                      // Stories section
+                      SliverToBoxAdapter(
+                        child: StoriesList(
+                          onStoryTap: (story,stories) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => StoryViewerScreen(story: story,stories:stories,initialIndex: 0,),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                       SliverList.builder(
                         itemCount: successState.posts.length,
                         itemBuilder: (BuildContext context, int index) {

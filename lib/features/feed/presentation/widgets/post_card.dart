@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/widgets/cash_net_Image.dart';
+import 'package:instagram_clone/core/widgets/cache_net_Image.dart';
 import 'package:instagram_clone/features/feed/domain/entities/post_entity.dart';
 import 'package:instagram_clone/features/feed/presentation/widgets/post_actions.dart';
 import 'package:instagram_clone/features/feed/presentation/widgets/post_caption.dart';

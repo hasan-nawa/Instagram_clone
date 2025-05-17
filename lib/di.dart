@@ -70,6 +70,7 @@ import 'package:instagram_clone/features/reels/domain/usecases/unbookmark_reel.d
 import 'package:instagram_clone/features/reels/domain/usecases/unfollow_user.dart' as reel;
 import 'package:instagram_clone/features/reels/domain/usecases/unlike_reel.dart';
 import 'package:instagram_clone/features/reels/presentation/bloc/reels_bloc.dart';
+import 'package:instagram_clone/features/story/presentation/bloc/story_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -103,6 +104,9 @@ Future<void> initDependencies() async {
 
   // Feature: Navigation
   sl.registerFactory(() => NavigationBloc());
+  
+  // Feature: Story
+  sl.registerFactory(() => StoryBloc());
 
   // Feature: Feed
   // Data sources
